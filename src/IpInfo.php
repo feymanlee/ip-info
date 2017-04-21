@@ -57,7 +57,7 @@ class IpInfo
             $this->info['city'],
             $this->info['county'],
         ];
-
+        $struct = array_map('trim', $struct);
         if (!$full) {
             array_splice($struct, 1, 1);
         }
