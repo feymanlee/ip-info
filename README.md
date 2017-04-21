@@ -1,5 +1,14 @@
 # ip-info
 通过 IP 得到对应的国家 、省（自治区或直辖市）、市（县）、运营商。基于 [淘宝 IP 库](http://ip.taobao.com/instructions.php) 。
+
+[![Build Status](https://travis-ci.org/feymanlee/ip-info.svg?branch=master)](https://travis-ci.org/feymanlee/ip-info)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/feymanlee/ip-info/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/feymanlee/ip-info/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/feymanlee/ip-info/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/feymanlee/ip-info/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/feymanlee/ip-info/badges/build.png?b=master)](https://scrutinizer-ci.com/g/feymanlee/ip-info/build-status/master)
+[![Latest Stable Version](https://poser.pugx.org/feyman/ip-info/v/stable)](https://packagist.org/packages/feyman/ip-info)
+[![Total Downloads](https://poser.pugx.org/feyman/ip-info/downloads)](https://packagist.org/packages/feyman/ip-info)
+[![License](https://poser.pugx.org/feyman/ip-info/license)](https://packagist.org/packages/feyman/ip-info)
+
 ## Install
 ```shell
 composer require feyman/ip-info

@@ -13,7 +13,7 @@ build:
     tests:
         override:
             -
-                command: phpunit --coverage-clover=ip-info-coverage-file
+                command: ./vendor/bin/phpunit --coverage-clover=ip-info-coverage-file
                 coverage:
                     file: ip-info-coverage-file
-                    format: php-clover
+                    format: clover
