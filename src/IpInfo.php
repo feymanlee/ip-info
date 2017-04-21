@@ -50,6 +50,12 @@ class IpInfo
      */
     public function address($delimiter = ' ', $full = false)
     {
+        if ($this->ip === '127.0.0.1') {
+            return '本机';
+        }
+        if ($this->isInternal()) {
+            return 'INNA 保留地址';
+        }
         $struct = [
             $this->info['country'],
             $this->info['area'],
@@ -57,7 +63,9 @@ class IpInfo
             $this->info['city'],
             $this->info['county'],
         ];
-        $struct = array_map('trim', $struct);
+        $struct = array_filter($struct, function ($item) {
+            return !empty($item);
+        });
         if (!$full) {
             array_splice($struct, 1, 1);
         }
@@ -110,6 +118,16 @@ class IpInfo
     private function ipCheck()
     {
         return preg_match('/^((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))$/u', $this->ip);
+    }
+
+    public function isInternal()
+    {
+        $netLocal = ip2long('127.255.255.255') >> 24; //127.x.x.x
+        $netA     = ip2long('10.255.255.255') >> 24; //A类网预留ip的网络地址
+        $netB     = ip2long('172.31.255.255') >> 20; //B类网预留ip的网络地址
+        $netC     = ip2long('192.168.255.255') >> 16; //C类网预留ip的网络地址
+
+        return $this->ip >> 24 === $netLocal || $this->ip >> 24 === $netA || $this->ip >> 20 === $netB || $this->ip >> 16 === $netC;
     }
 
     /**
