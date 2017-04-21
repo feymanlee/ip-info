@@ -30,7 +30,7 @@ class IpInfoTest extends \PHPUnit_Framework_TestCase
     public function testInfo()
     {
         $info = $this->ipInfo->info();
-        
+
         $this->assertArrayHasKey('ip', $info);
         $this->assertArrayHasKey('country', $info);
         $this->assertArrayHasKey('area', $info);
