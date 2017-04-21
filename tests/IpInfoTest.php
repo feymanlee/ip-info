@@ -30,6 +30,7 @@ class IpInfoTest extends \PHPUnit_Framework_TestCase
     public function testInfo()
     {
         $info = $this->ipInfo->info();
+        
         $this->assertArrayHasKey('ip', $info);
         $this->assertArrayHasKey('country', $info);
         $this->assertArrayHasKey('area', $info);
@@ -69,6 +70,7 @@ class IpInfoTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(is_string($this->ipInfo->city()));
     }
+
     public function testCounty()
     {
         $this->assertTrue(is_string($this->ipInfo->county()));
