@@ -63,12 +63,10 @@ class IpInfo
             $this->info['city'],
             $this->info['county'],
         ];
-        $struct = array_filter($struct, function ($item) {
-            return !empty($item);
-        });
         if (!$full) {
             array_splice($struct, 1, 1);
         }
+        $struct = array_filter($struct);
 
         return implode($delimiter, $struct);
     }
