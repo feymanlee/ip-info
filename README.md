@@ -6,13 +6,13 @@ composer require feyman/ip-info
 ```
 ## Usage
 ```php
-//实例化
+// 实例化
 $info  = new IpInfo($ip);
 
-//获取详细信息
+// 获取详细信息
 $info->info();
 
-//获取地址
+// 获取地址
 // $delimiter 地址各段之间的分隔符
 // $full 是否获取完整的地址，默认获取的地址显示为 中国 北京 北京 朝阳 国贸，
 // $full = true 时，或加上 area 显示为 中国 华北 北京 北京 朝阳 国贸
