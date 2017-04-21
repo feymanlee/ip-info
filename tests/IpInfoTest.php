@@ -10,7 +10,8 @@ class IpInfoTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $ip           = (\Faker\Factory::create())->ipv4;
+        $faker        = \Faker\Factory::create();
+        $ip           = $faker->ipv4;
         $this->ipInfo = new IpInfo($ip);
         echo 'IP：' . $ip . ' ' . $this->ipInfo->address() . PHP_EOL;
     }
