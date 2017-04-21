@@ -8,8 +8,7 @@
     "ip-address"
   ],
   "require": {
-    "php": ">=5.1",
-    "illuminate/support": "^5.4"
+    "php": ">=5.1"
   },
   "autoload": {
     "psr-4": {
