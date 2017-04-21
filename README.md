@@ -11,9 +11,9 @@ $info  = new IpInfo($ip);
 //获取详细信息
 $info->info();
 //获取地址
- * $delimiter 地址各段之间的分隔符
- * $full 是否获取完整的地址，默认获取的地址显示为 中国 北京 北京 朝阳 国贸，
-   $full = true 时，或加上 area 显示为 中国 华北 北京 北京 朝阳 国贸
+// $delimiter 地址各段之间的分隔符
+// $full 是否获取完整的地址，默认获取的地址显示为 中国 北京 北京 朝阳 国贸，
+// $full = true 时，或加上 area 显示为 中国 华北 北京 北京 朝阳 国贸
 $info->address($delimiter = ' ', $full = false);
 // 获取 ISP 信息
 $info->isp();
