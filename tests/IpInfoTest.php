@@ -16,7 +16,7 @@ class IpInfoTest extends \PHPUnit_Framework_TestCase
         echo 'IP：' . $ip . ' ' . $this->ipInfo->address() . PHP_EOL;
     }
 
-    public function TestAddress()
+    public function testAddress()
     {
         $address = $this->ipInfo->address();
         $this->assertTrue(is_string($address));
@@ -39,12 +39,6 @@ class IpInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('city', $info);
         $this->assertArrayHasKey('county', $info);
         $this->assertArrayHasKey('isp', $info);
-        $this->assertArrayHasKey('country_id', $info);
-        $this->assertArrayHasKey('area_id', $info);
-        $this->assertArrayHasKey('region_id', $info);
-        $this->assertArrayHasKey('city_id', $info);
-        $this->assertArrayHasKey('county_id', $info);
-        $this->assertArrayHasKey('isp_id', $info);
     }
 
     public function testIsp()

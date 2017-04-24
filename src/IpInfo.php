@@ -14,17 +14,26 @@ use IpInfo\Exceptions\MethodNotExistException;
 class IpInfo
 {
     /**
-     *
-     */
-    const URI = 'http://ip.taobao.com/service/getIpInfo.php?ip=';
-    /**
      * @var
      */
     private $ip;
     /**
      * @var
      */
-    private $info;
+    private $info = [
+        'ip'      => '',
+        'country' => '',
+        'area'    => '',
+        'region'  => '',
+        'city'    => '',
+        'county'  => '',
+        'isp'     => '',
+    ];
+    /**
+     * 请求淘宝 IP 库 api 超时时间
+     * @var int
+     */
+    private $outTime = 1;
 
     /**
      * IpInfo constructor.
@@ -36,10 +45,7 @@ class IpInfo
     public function __construct($ip)
     {
         $this->ip = $ip;
-        if (!$this->ipCheck()) {
-            throw new IpIllegalException('Illegal IP:' . $this->ip);
-        }
-        $this->resolve();
+        $this->query();
     }
 
     /**
@@ -50,12 +56,6 @@ class IpInfo
      */
     public function address($delimiter = ' ', $full = false)
     {
-        if ($this->ip === '127.0.0.1') {
-            return '本机';
-        }
-        if ($this->isInternal()) {
-            return 'INNA 保留地址';
-        }
         $struct = [
             $this->info['country'],
             $this->info['area'],
@@ -97,35 +97,66 @@ class IpInfo
     }
 
     /**
-     * @throws GetIpIpInfoFailedException
+     * @return mixed
      */
-    private function resolve()
+    public function getOutTime()
     {
-        $result = file_get_contents(self::URI . $this->ip);
-        $data   = json_decode($result, 1);
-        if ($result === false || $data['code'] === 1) {
-            throw new GetIpIpInfoFailedException('Failed to Get IP Info，Please Try Again');
-        } else {
-            $this->info = $data['data'];
-        }
+        return $this->outTime;
     }
 
     /**
-     * @return int
+     * @param mixed $outTime
+     *
+     * @return $this
      */
-    private function ipCheck()
+    public function setOutTime($outTime)
     {
-        return preg_match('/^((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))$/u', $this->ip);
+        $this->outTime = $outTime;
+
+        return $this;
     }
 
-    public function isInternal()
+    /**
+     * @throws GetIpIpInfoFailedException
+     */
+    private function query()
     {
+        $this->info['ip'] = $this->ip;
+        if ($this->ip === '127.0.0.1') {
+            $this->info['country'] = '本机';
+        } elseif ($this->isInternal()) {
+            $this->info['country'] = 'INNA 保留地址';
+        } else {
+            // 先通过 api 获取，api 获取失败的话通过本地数据库获取
+            $result = $this->apiQuery();
+            if ($result === false) {
+                // api 获取失败的话进行本地获取
+                $result = $this->localQuery();
+            }
+
+            $this->info = $result;
+        }
+    }
+
+    private function apiQuery()
+    {
+        return (new IpTaobaoApiQuery)->setOutTime($this->outTime)->query($this->ip);
+    }
+
+    private function localQuery()
+    {
+        return IpLocalQuery::create()->query($this->ip);
+    }
+
+    private function isInternal()
+    {
+        $ipLong   = ip2long($this->ip);
         $netLocal = ip2long('127.255.255.255') >> 24; //127.x.x.x
         $netA     = ip2long('10.255.255.255') >> 24; //A类网预留ip的网络地址
         $netB     = ip2long('172.31.255.255') >> 20; //B类网预留ip的网络地址
         $netC     = ip2long('192.168.255.255') >> 16; //C类网预留ip的网络地址
 
-        return $this->ip >> 24 === $netLocal || $this->ip >> 24 === $netA || $this->ip >> 20 === $netB || $this->ip >> 16 === $netC;
+        return $ipLong >> 24 === $netLocal || $ipLong >> 24 === $netA || $ipLong >> 20 === $netB || $ipLong >> 16 === $netC;
     }
 
     /**
