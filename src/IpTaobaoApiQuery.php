@@ -36,7 +36,7 @@ class IpTaobaoApiQuery extends IpQueryContract
      *
      * @return $this
      */
-    public function setOutTime(int $outTime)
+    public function setOutTime($outTime)
     {
         $this->outTime = $outTime;
 
