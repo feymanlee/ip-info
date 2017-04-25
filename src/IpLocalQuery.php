@@ -39,7 +39,7 @@ class IpLocalQuery extends IpQueryContract
 
     private function __construct()
     {
-        $this->openDataBase(realpath('data/ip_data.dat'));
+        $this->openDataBase(__DIR__ . '/../data/ip_data.dat');
     }
 
     public function __destruct()
