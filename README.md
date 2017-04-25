@@ -1,5 +1,5 @@
 # ip-info
-通过 IP 得到对应的国家 、省（自治区或直辖市）、市（县）、运营商。基于 [淘宝 IP 库](http://ip.taobao.com/instructions.php) 。
+通过 IP 得到对应的国家 、省（自治区或直辖市）、市(州)、县（区）、运营商。基于 [淘宝 IP 库](http://ip.taobao.com/instructions.php) 和 ipip.net IP 数据库。
 
 [![Build Status](https://travis-ci.org/feymanlee/ip-info.svg?branch=master)](https://travis-ci.org/feymanlee/ip-info)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/feymanlee/ip-info/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/feymanlee/ip-info/?branch=master)
